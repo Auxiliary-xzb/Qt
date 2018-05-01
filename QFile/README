@@ -1,0 +1,47 @@
+    QFile类提供了一个读取文件和写文件的接口。
+    QFile是一个用来读写文本和二进制文件和资源的I/O设备。QFile可以被自己使用，
+更方便的方式是被QDataStream和QTextStream。
+    文件的名字通常被传入到QFile的构造器，但是也任何时候可以使用setFileName()函
+数设置。QFile期望的文件分隔符是'/'   ，其他的分隔符是不支持的(例如 '\')。
+    你可以使用exists()函数来检查文件是否存在，使用remove()函数移除文件，更多文件
+系统相关的操作在QFileInfo和QDir中提供。
+    文件使用open()函数打开，使用close()函数关闭，使用flush()函数进行刷新。数据经常
+使用QDataStream或者QTextStream来读出或写入，但是你仍然可以调用继承至QIODevice
+的函数read()，readline()，readAll()，write()。QFile仍然继承了getChar()，putChar()，ungetChar()
+函数，他们可以一次操作一个字符。
+    文件的大小可以调用size()函数，调用pos()函数返回当前文件光标位置，调用seek()函数
+移动到一个新的文件位置。如果到达了文件结尾，atEnd()函数返回true。
+
+文件读写问题：
+    在使用QTextStream和QDataStream读取文件时可以使用<<和>>操作符。
+    在Unix中，有一些特设的系统文件（例如/proc），他们调用size()后会一直返回0，但你
+仍然可以从这样的文件中读取数据。当调用read()函数时数据直接相应。在这种情况下，
+无论如何，当有许多数据要读取时，你都不能使用atEnd()去确定读取结束（因为atEnd()函
+数将返回true，当一个文件声明大小只有0）。相反，你应该重复调用read()，readAll()，
+readAll()，三者中的一个函数直到没有数据可以读取。
+
+                    QFile file("/proc/modules");
+                    if (!file.open(QIODevice::ReadOnly | QIODevice::Text))
+                        return;
+
+                    QTextStream in(&file);
+                    QString line = in.readLine();
+                    while (!line.isNull()) {
+                        process_line(line);
+                        line = in.readLine();
+                    }
+
+信号问题：
+    不同于其他QIODevice的实现，QTcpSocket和QFile不会发射aboutToClose(), bytesWritten(),
+和 readyRead()信号。这个实现的细节表白QFile不适合读取或写入某些种类的文件，例如
+Unit平台的设备文件。
+
+平台问题：
+    文件权限管理的不同在不同的平台，在类Unix系统中，不能写的目录是不能创建文件的。
+但是在Windows上不总会出现这种情况，"My Documents"目录是不能写的，但是仍然可以
+在该目录创建文件。
+    Qt's understanding of file permissions is limited, which affects especially the QFile::setPermissions() function.
+On Windows, Qt will set only the legacy read-only flag, and that only when none of the Write* flags are passed.
+Qt does not manipulate access control lists (ACLs), which makes this function mostly useless for NTFS volumes.
+It may still be of use for USB sticks that use VFAT file systems. POSIX ACLs are not manipulated, either.
+（以上这句开头就没看懂。）

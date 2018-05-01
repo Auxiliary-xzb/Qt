@@ -1,0 +1,19 @@
+    UDP (User Datagram Protocol) is a lightweight, unreliable, datagram-oriented, connectionless protocol.
+               用户数据报协议是一个轻量，不可靠，数据包不定向，无链接协议。
+
+QUdpSocket:
+    1、通常使用方法是使用bind()函数绑定一个IP地址和端口。
+    2、使用writeDatagram()，readDatagram()函数传输数据。
+    3、如果想使用QIODevice的函数，例如read()，write()，readLine()。你需要
+          先使用connectToHost()链接到对方的socket。
+    4、每个数据报被发送到网络时，该socket就会发出bytesWritten()信号，如果
+          你只想发送数据报，你可以不调用bind()函数。
+    5、每当数据报到达时，readyRead()信号就发出，在该情况下，hasPendingDiagrams()
+          返回true。
+    6、调用pendingDiagramSize()获取即将传输来的数据报的大小，然后调用readDiagram()
+          函数去读取数据报。
+ **7、注意，当接收到readyRead()信号时，应该读取数据报，否则下个数据报将
+           不会发出readyRead()信号。
+    8、支持多路传播（multicast），具体看帮助文档。
+    9、可以使用connectToHost()函数建立虚链接，然后使用read()和write()交换数
+          据，不需要指明每个数据报的接受者。

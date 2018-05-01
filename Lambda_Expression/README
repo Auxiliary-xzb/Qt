@@ -1,0 +1,75 @@
+在lambda表达式的理解中一直存在一个问题：
+    填入&和=的区别，&和=的理解不够深入。
+
+具体的lambda表达式请查看c++参考
+https://msdn.microsoft.com/zh-cn/library/dd293608.aspx
+
+什么是Lambda表达式：
+    “Lambda 表达式”(lambda expression)是一个匿名函数，Lambda表达式基于数学中的λ演算得名，
+直接对应于其中的lambda抽象(lambda abstraction)，是一个匿名函数，即没有函数名的函数。
+
+
+    [ capture list ] ( parameter list) mutable  throw() -> return type{
+        function body
+    }
+Lambda表达式的组成：
+    1.Capture 子句（在 C++ 规范中也称为 lambda 引导。）       capture list
+    2.参数列表（可选）。 （也称为 lambda 声明符)                    parameter list
+    3.可变规范（可选）。                                                               mutable
+    4.异常规范（可选）。    exception-specification                       throw()
+    5.尾随返回类型（可选）。                                                       return type
+    6.“lambda 体”                                                                            {function body}
+
+Capture子句：
+            Lambda表达式以Capture子句（标准语法中的lambda引导）开头，它指定要捕获的变量以
+及是通过值还是引用进行捕获。有与号（&）前缀的变量通过引用访问，没有该前缀的变量通过
+值访问。
+            空Capture子句[  ] 指示lambda表达式的主体不访问封闭范围中的变量。
+            可以使用默认捕获模式（标准语法中的 capture-default）来指示如何捕获 lambda 中引用的任
+何外部变量：[&] 表示通过引用捕获引用的所有变量，而 [=] 表示通过值捕获它们。可以使用默认
+捕获模式，然后为特定变量显式指定相反的模式。例如，如果 lambda 体通过引用访问外部变量 total
+并通过值访问外部变量 factor，则以下 capture 子句等效：
+            [&total, factor]
+            [factor, &total]
+            [&, factor]
+            [factor, &]
+            [=, &total]
+            [&total, =]
+            如果 capture 子句包含 capture-default &，则该 capture 子句的 identifier 中没有任何 capture 可采用 & identifier
+形式。 同样，如果 capture 子句包含 capture-default =，则该 capture 子句的 capture 不能采用 = identifier 形式。
+identifier 或 this 在 capture 子句中出现的次数不能超过一次。 以下代码片段给出了一些示例。
+struct S { void f(int i); };
+void S::f(int i) {
+    [&, i]{};    // OK
+    [&, &i]{};   // ERROR: i preceded by & when & is the default
+    [=, this]{}; // ERROR: this when = is the default
+    [i, i]{};    // ERROR: i repeated
+}
+
+
+=：把外部所有局部变量，类中所有成员以值传递方式
+this：类中所有成员以值传递方式
+&：把外部所有局部变量以引用传递方式
+
+在使用 capture 子句时，建议你记住以下几点（尤其是使用采取多线程的 lambda 时）：
+        1.引用捕获可用于修改外部变量，而值捕获却不能实现此操作。 （mutable允许修改副本，而不能修改原始项。）
+        2.引用捕获会反映外部变量的更新，而值捕获却不会反映。
+        3.引用捕获引入生存期依赖项，而值捕获却没有生存期依赖项。 当 lambda 以异步方式运行时，这一点尤其重要。如果
+            在异步 lambda 中通过引用捕获本地变量，该本地变量将很可能在 lambda 运行时消失，从而导致运行时访问冲突。
+第三点可以暂时不理会，但第一点说明了在进行值捕获时，产生的是只读的副本，想修改时会发生错误，只有使用mutable
+修饰时才能对副本进行修改，原始项不会被修改。
+
+
+参数列表：
+        与函数传参类似，在进行槽函数处理时，必须要将槽函数的参数列表与信号函数的参数列表一致。
+
+可变规范:
+         通常，lambda 的函数调用运算符为 const-by-value，但对 mutable 关键字的使用可将其取消。 它不会生成可变的数据成员。
+    利用可变规范，lambda 表达式的主体可以修改通过值捕获的变量。(在值捕获时，lambda表达式得到的只是一个副本，并且
+    该副本是只读的，当使用mutable修饰时，可以在lambda体中修改它的值，但不会影响原始项。)
+
+异常规范：
+        你可以使用 throw() 异常规范来指示 lambda 表达式不会引发任何异常。
+
+尾随返回类型：
+        lambda表达式的类型。

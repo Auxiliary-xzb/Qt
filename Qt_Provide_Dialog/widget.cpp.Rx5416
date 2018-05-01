@@ -1,0 +1,15 @@
+#include "widget.h"
+#include <QMessageBox>
+#include <QMenuBar>
+#include <QMenu>
+
+Widget::Widget(QWidget *parent)
+    : QWidget(parent)
+{
+    QMenuBar *menubar = new QMenuBar(this);
+}
+
+Widget::~Widget()
+{
+
+}

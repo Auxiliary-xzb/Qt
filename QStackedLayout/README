@@ -1,0 +1,54 @@
+    The QStackedLayout class provides a stack of widgets where only one widget is visible at a time.
+    QStackedLayout can be used to create a user interface similar to the one provided by QTabWidget.
+There is also a convenience QStackedWidget class built on top of QStackedLayout.
+    A QStackedLayout can be populated with a number of child widgets ("pages"). For example:
+
+                      QWidget *firstPageWidget = new QWidget;
+                      QWidget *secondPageWidget = new QWidget;
+                      QWidget *thirdPageWidget = new QWidget;
+
+                      QStackedLayout *stackedLayout = new QStackedLayout;
+                      stackedLayout->addWidget(firstPageWidget);
+                      stackedLayout->addWidget(secondPageWidget);
+                      stackedLayout->addWidget(thirdPageWidget);
+
+                      QVBoxLayout *mainLayout = new QVBoxLayout;
+                      mainLayout->addLayout(stackedLayout);
+                      setLayout(mainLayout);
+
+    QStackedLayout provides no intrinsic means for the user to switch page. This is typically done through
+a QComboBox or a QListWidget that stores the titles of the QStackedLayout's pages. For example:
+
+                      QComboBox *pageComboBox = new QComboBox;
+                      pageComboBox->addItem(tr("Page 1"));
+                      pageComboBox->addItem(tr("Page 2"));
+                      pageComboBox->addItem(tr("Page 3"));
+                      connect(pageComboBox, SIGNAL(activated(int)),
+                              stackedLayout, SLOT(setCurrentIndex(int)));
+
+    When populating a layout, the widgets are added to an internal list. The indexOf() function returns the index
+of a widget in that list. The widgets can either be added to the end of the list using the addWidget() function, or
+inserted at a given index using the insertWidget() function. The removeWidget() function removes the widget at
+the given index from the layout. The number of widgets contained in the layout, can be obtained using the count()
+function.
+    The widget() function returns the widget at a given index position. The index of the widget that is shown on
+screen is given by currentIndex() and can be changed using setCurrentIndex(). In a similar manner, the currently
+shown widget can be retrieved using the currentWidget() function, and altered using the setCurrentWidget()
+function.
+    Whenever the current widget in the layout changes or a widget is removed from the layout, the currentChanged()
+and widgetRemoved() signals are emitted respectively.
+
+大致翻译：
+    QStackedLayout提供一个装widget的stack，在某一时刻只能有一个widget显示。
+    QStackedLayout可以用来创建一个用户界面类似与QTabWigdet。有一个更为方便的类QStackedWidget。
+    QStackedLayout在拥有很多子widget时是很受欢迎的：（代码在上）
+    QStackedLayout没有提供固有的方法供用户切换界面。切换功能通常使用QComboBox或者QListWidget
+配合QStackedLayout以存储的页面。（代码在上）
+    当构造一个layout时，widget们被添加到一个内部的list中。indexOf()函数返回一个widget在list中的索引值。
+widget可以使用addWidget()功能添加入list中，或者使用insertWidget()函数插入到提供的索引值中。removeWidget()
+函数从list中移除指定widget。layout中的widget的数量可以使用count()函数获得。
+    widget()函数返回指定索引值的widget。现在显示在屏幕上的widget的索引值通过currentIndex()获得然后使
+用setCurrentIndex()进行设置。相同的规则，当前显示的widget可以使用currentWidget()函数获取，选择当前
+显示的widget可以使用setCurrentWidget()函数进行设置。
+    无论何时，layout中的当前widget改变或者widget从该layout移除，currentChanged()和widgetRemoved()信号
+将被发出。

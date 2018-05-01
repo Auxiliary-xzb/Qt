@@ -1,0 +1,68 @@
+        The QFormLayout class manages forms of input widgets and their associated labels.
+        QFormLayout is a convenience layout class that lays out its children in a two-column form. The left column consists
+of labels and the right column consists of "field" widgets (line editors, spin boxes, etc.).
+        Traditionally, such two-column form layouts were achieved using QGridLayout. QFormLayout is a higher-level alternative
+that provides the following advantages:
+       1. Adherence to the different platform's look and feel guidelines.
+            For example, the macOS Aqua and KDE guidelines specify that the labels should be right-aligned,
+       whereas Windows and GNOME applications normally use left-alignment.
+
+        2.Support for wrapping long rows.
+            For devices with small displays, QFormLayout can be set to wrap long rows, or even to wrap all rows.
+
+        3.Convenient API for creating label--field pairs.
+            The addRow() overload that takes a QString and a QWidget * creates a QLabel behind the scenes and
+        automatically set up its buddy. We can then write code like this:
+                      QFormLayout *formLayout = new QFormLayout;
+                      formLayout->addRow(tr("&Name:"), nameLineEdit);
+                      formLayout->addRow(tr("&Email:"), emailLineEdit);
+                      formLayout->addRow(tr("&Age:"), ageSpinBox);
+                      setLayout(formLayout);
+
+    Compare this with the following code, written using QGridLayout:
+
+          nameLabel = new QLabel(tr("&Name:"));
+          nameLabel->setBuddy(nameLineEdit);
+
+          emailLabel = new QLabel(tr("&Name:"));
+          emailLabel->setBuddy(emailLineEdit);
+
+          ageLabel = new QLabel(tr("&Name:"));
+          ageLabel->setBuddy(ageSpinBox);
+
+          QGridLayout *gridLayout = new QGridLayout;
+          gridLayout->addWidget(nameLabel, 0, 0);
+          gridLayout->addWidget(nameLineEdit, 0, 1);
+          gridLayout->addWidget(emailLabel, 1, 0);
+          gridLayout->addWidget(emailLineEdit, 1, 1);
+          gridLayout->addWidget(ageLabel, 2, 0);
+          gridLayout->addWidget(ageSpinBox, 2, 1);
+          setLayout(gridLayout);
+
+        The table below shows the default appearance in different styles.
+        The form styles can be also be overridden individually by calling setLabelAlignment(), setFormAlignment(),
+setFieldGrowthPolicy(), and setRowWrapPolicy(). For example, to simulate the form layout appearance of QMacStyle
+on all platforms, but with left-aligned labels, you could write:
+          formLayout->setRowWrapPolicy(QFormLayout::DontWrapRows);
+          formLayout->setFieldGrowthPolicy(QFormLayout::FieldsStayAtSizeHint);
+          formLayout->setFormAlignment(Qt::AlignHCenter | Qt::AlignTop);
+          formLayout->setLabelAlignment(Qt::AlignLeft);
+
+大致翻译如下：
+        QFormLayout类用来管理输入部件和与他们相关联的标签。
+        QFormLayout是一个方便的类将其的子部件放入两列的表格中。左边的列由标签组成，右边的列由
+“field”部件组成（例如line editors， spin box，等等）
+        通常，像两列的的表格布局都是由QGridLayout完成，QFormLayout是一个高优先级的组件，它提供
+ 以下优点：
+            1、依附于不同的平台的外观并且feel guidelines
+                    例如，macOS Aqua 和KDE 的guidelines 指明label组件需要right-aligned，然而Windows和GNOME
+                    应用经常使用left-aligned。
+            2、支持wrapping long rows
+                    拥有小显示的设备，QFrormLayout可以设置wrap long rows，甚至wrap all rows
+            3、方便的创建label-field的API
+                    addRow()重载，使用一个QString和一个QWidget *创建一个QLabel在场景之后，并且设置它的伙伴
+                    我们可以向如下写代码：（看上述代码）
+
+        以下表格显示了默认的外观在不用的平台。（看帮助文档）
+        表格的样式可以被以个人的意愿重写通过调用setLabelAlignment(),setFormAlignment(),setFieldGrowthPolicy()
+和setRowWrapPolicy(),例如见QMacStyle模拟到所有平台，但是使用left-aligned的标签形式，你可这么写：（上述代码）

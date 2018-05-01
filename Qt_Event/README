@@ -1,0 +1,44 @@
+    The QWidget class is the base class of all user interface objects.
+    QWiget鳄梨是所有用户界面对象的基类，所以所有的事件都在QWidget中可以查看。
+
+    在Qt中信号与槽，消息机制都可以达到相同的效果，但是两者还是有区别的，但是
+区别现在不容易深究，设计到很多Qt内部的东西。
+
+
+    The QEvent class is the base class of all event classes. Event objects contain event parameters.
+    Qt's main event loop (QCoreApplication::exec()) fetches native window system events from
+the event queue, translates them into QEvents, and sends the translated events to QObjects.
+    In general, events come from the underlying window system (spontaneous() returns true), but
+it is also possible to manually send events using QCoreApplication::sendEvent() and QCoreApplication::postEvent()
+(spontaneous() returns false).
+    QObjects receive events by having their QObject::event() function called. The function can be
+reimplemented in subclasses to customize event handling and add additional event types; QWidget::event()
+is a notable example. By default, events are dispatched to event handlers like QObject::timerEvent()
+and QWidget::mouseMoveEvent(). QObject::installEventFilter() allows an object to intercept events
+destined for another object.
+    The basic QEvent contains only an event type parameter and an "accept" flag. The accept flag set
+with accept(), and cleared with ignore(). It is set by default, but don't rely on this as subclasses may
+choose to clear it in their constructor.
+    Subclasses of QEvent contain additional parameters that describe the particular event.
+
+spontaneous()：
+    Returns true if the event originated outside the application (a system event); otherwise returns false.
+    如果事件产生在application外部这返回true，否则返回false。
+
+大致翻译：
+    QEvent类是所有事件类的基类，事件对象都含有事件参数。
+    Qt的主要事件循环(QCoreApplication::exec())是从本地的系统的消息队列中获取，
+把他们翻译成QEvents，并且发送已经翻译的事件给QObjects。
+    大体上，事件从系统底层发出（spontaneous()返回true），但是事件仍可手动的
+发送通过QCoreApplication::sendEvent()和QCoreApplication:postEvent()（spontaneous()
+返回false）。
+    QObjects接收事件通过调用他们的QObject::event()。该功能可以在子类中重新
+实现，自己定制事件的handling和添加额外的事件种类；QWidget::event()是一个
+显著的例子。默认的，事件被派送到事件的handlers例如QObject::timerEvent()和
+QWidget::mouseMoveEvent()。QObject::installEventFilter()允许一个object拦截另一个
+object的指定事件。
+    基本的QEvent仅包含一个事件种类的参数和一个“accept”标志。该标志使用
+accept()设置，使用ignore()清除。默认它是设置了的，但是不要依赖这个，因此
+子类在他们的构造器中选择清除它。
+    QEvent子类包含额外的参数来描述特别的事件。
+

@@ -1,0 +1,6 @@
+在Qt中几何管理的基类为QLayout，继承自QLayoutItem，QObject。
+Qt已经实现了四种布局：
+    1.QBoxLayout            盒型，有垂直盒，水平盒
+    2.QFormLayout          表格布局，指定行和列
+    3.QGridLayout            网格布局，栅格布局
+    4.QStackedLayout        栈式网格

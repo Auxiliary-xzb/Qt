@@ -1,0 +1,73 @@
+#include "widget.h"
+#include "ui_widget.h"
+#include <QKeyEvent>
+#include <QTimer>
+
+Widget::Widget(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Widget)
+{
+    ui->setupUi(this);
+
+    /*
+     *      A timer event will occur every interval milliseconds until killTimer() is called.
+     *  If interval is 0, then the timer event occurs once every time there are no more
+     *  window system events to process.
+     *
+     * 定时器事件将会间隔internal参数毫秒出发，直到killTimer()被调用。如果
+     * internal参数是0，那么当没有更多的窗口系统事件发生时，计时器事件
+     * 就会触发一次。
+    */
+    click_times = 0;
+    connect(ui->pushButton, &QPushButton::clicked,
+            [ & ](){
+        if(click_times % 2 == 0)
+            id = this->startTimer(1000);
+        else if(click_times % 2 == 1)
+            this->killTimer(id);
+
+        click_times++;
+    });
+    /*
+        QTimer *timer = new QTimer(this);
+    timer->startTimer(1000);
+    connect(ui->pushButton_2, &QPushButton::clicked,
+            [ = ](){
+    });
+*/}
+
+void Widget::enterEvent(QEvent *event){
+    ui->label_2->setText("鼠标进入Widget");
+}
+
+void Widget::leaveEvent(QEvent *event){
+    ui->label_2->setText("鼠标离开Widget");
+}
+
+void Widget::keyPressEvent(QKeyEvent *event){
+    switch(event->key()){
+    case Qt::Key_Up:
+        ui->label_3->setText("上被按下");
+        break;
+    case Qt::Key_Down:
+        ui->label_3->setText("下被按下");
+        break;
+    case Qt::Key_Left:
+        ui->label_3->setText("左被按下");
+        break;
+    case Qt::Key_Right:
+        ui->label_3->setText("右被按下");
+        break;
+    }
+}
+
+void Widget::timerEvent(QTimerEvent *event){
+    count++;
+    ui->label_4->setText(tr("count is %1").arg(count));
+}
+
+Widget::~Widget()
+{
+    delete ui;
+}
+

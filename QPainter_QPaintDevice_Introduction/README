@@ -1,0 +1,54 @@
+    The QPainter class performs low-level painting on widgets and other paint devices.
+    QPainter provides highly optimized functions to do most of the drawing GUI programs require.It can draw
+everything from simple lines to complex shapes like pies and chords. It can also draw aligned text and pixmaps.
+Normally, it draws in a "natural" coordinate system, but it can also do view and world transformation. QPainter
+can operate on any object that inherits the QPaintDevice class.
+    The common use of QPainter is inside a widget's paint event: Construct and customize (e.g. set the pen or the
+brush) the painter. Then draw. Remember to destroy the QPainter object after drawing. For example:
+
+                  void SimpleExampleWidget::paintEvent(QPaintEvent *)
+                  {
+                      QPainter painter(this);
+                      painter.setPen(Qt::blue);
+                      painter.setFont(QFont("Arial", 30));
+                      painter.drawText(rect(), Qt::AlignCenter, "Qt");
+                  }
+
+    The core functionality of QPainter is drawing, but the class also provide several functions that allows you to
+customize QPainter's settings and its rendering quality, and others that enable clipping. In addition you can control
+how different shapes are merged together by specifying the painter's composition mode.
+    The isActive() function indicates whether the painter is active. A painter is activated by the begin() function and
+the constructor that takes a QPaintDevice argument. The end() function, and the destructor, deactivates it.
+    Together with the QPaintDevice and QPaintEngine classes, QPainter form the basis for Qt's paint system. QPainter
+is the class used to perform drawing operations. QPaintDevice represents a device that can be painted on using a
+QPainter. QPaintEngine provides the interface that the painter uses to draw onto different types of devices. If the painter
+is active, device() returns the paint device on which the painter paints, and paintEngine() returns the paint engine that the
+painter is currently operating on. For more information, see the Paint System.
+    Sometimes it is desirable to make someone else paint on an unusual QPaintDevice. QPainter supports a static function
+to do this, setRedirected().
+    Warning: When the paintdevice is a widget, QPainter can only be used inside a paintEvent() function or in a function
+called by paintEvent().
+
+大致翻译：
+    QPainter类表现出低层次的绘图在widget和其他绘图设备上。
+    QPainter提供高量可充分利用的函数去完成GUI程序需求的大部分绘图。它可以绘制任何东西，从简单的
+线条到复杂的形状。它也可以绘制对齐的文字和pixmap。通常，它在"自然的"坐标系统中绘制，但是它仍然
+可以做view和world的转换。QPainter可以在任何继承了QPainterDevice的对象上操作。
+    QPainter的通常使用是在一个widget的绘图事件中：构造和自定义painter（例如设置画笔或者画刷）。然后
+开始绘图。记住在绘画完后销毁QPainter对象。
+    QPainter的核心功能是绘画，但是这个类提供一些方法，这些方法允许你去自定义QPainter的设置，它的渲
+染质量和其他可行的裁剪。另外你可以控制如何将不同的形状融合在一起通过通过指明painter的构成模式。
+    isActive()函数表明painter是否活动，painter活动通过调用begin()函数或者构造器拥有一个QPaintDevice参数。
+end()函数和销毁器让其变得不活动。
+    QPainter，QPaintDevice和QPaintEngine类是Qt绘画的基础。QPainter被用来表现出绘图操作。QPaintDevice
+表示一个可以使用QPainter类绘图的对象。QPaintEngine提供不种设备的绘图接口。如果painter是活动的，
+device()返回painter的绘图设备，paintEngine()返回painter正在操作的paint engine。
+    有时希望在一个不常用的QPaintDevice上绘图，QPainter支持一个静态方法完成它，setRedirected()。
+    警告：如果paintdevice是一个widget，QPainter只能被使用在paintEvent()函数中或被paintEvent()调用的函数中。
+
+
+
+常用的绘图设备：
+    QPixmap     针对屏幕进行了优化，和平台相关，不能对图片进行修改
+    QImage      和平台无关，可以对图片进行修改，可以在线程中绘图
+    QPicture    保存绘图的状态(二进制文件)

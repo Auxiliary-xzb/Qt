@@ -1,0 +1,17 @@
+事件的忽略和接收：
+    setAccept()函数。
+    the accept flag of the event object
+    Setting the accept parameter indicates that the event receiver wants the event. Unwanted
+events might be propagated to the parent widget. By default, isAccepted() is set to true, but
+don't rely on this as subclasses may choose to clear it in their constructor.
+    For convenience, the accept flag can also be set with accept(), and cleared with ignore().
+
+大致翻译：
+    事件对象的接收标志。
+    设置接收标志标明事件接收者想要该事件。不想要的事件可能被传播到它的父
+widget。默认的isAccepted()被设置为true，但是不要依赖这个默认值，因为子类可
+能在构造器中选择去清除它。
+    方便的设置接收标志的方法是调用accept()，清除标志的方法是调用ignore()。
+
+
+事件的忽略和接收一般是在点击关闭窗口的时候使用。

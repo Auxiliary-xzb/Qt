@@ -1,0 +1,15 @@
+    TCP (Transmission Control Protocol) is a reliable, stream-oriented, connection-oriented transport protocol
+            传输控制协议是一个可靠的，流的方向确定的，链接确定的传输协议。
+
+QTcpServer：
+    1、指明一个端口，或者由QTcpServer自动选择一个。
+    2、可以监听特定的IP地址，或者所有机器的地址。
+    3、调用listen()函数监听监听即将到来的链接，当一个客户端链接到服务器时，
+          newConnection()信号就会发出。
+    4、调用nextPandingConnection()接收一个即将到来的链接对象。该函数返回一
+          个QTcpSocket对象，该对象可以用来与客户端进行通信。
+    5、在发生错误时，serverError()函数返回错误类型。errorString()返回一个可读
+          的错误信息。
+    6、正在监听的服务器的端口号和IP可以通过serverPort()和serverAddress()获取。
+
+** 7、QTcpServer有阻塞和非阻塞两种形式。

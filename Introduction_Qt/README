@@ -1,0 +1,26 @@
+在Qt中QWidget是所有窗口类的基类
+
+Qt头文件的特点：
+    1.在Qt中头文件都没有.h
+    2.头文件和类名是一样的
+    3.头文件的前两个字母都为大写
+    4.头文件大部分是以Q开头
+
+Qt程序的主要结构：
+int main(int argc, char *argv[]){
+    QApplication a(argc, argv);
+
+    //业务部分
+
+
+    return a.exec();
+}
+以上类似于android，一个应用程序只有一个QApplication类，可以在QApplication中实现通信。
+可以发现，在程序的QApplication实现之后，都会实现一个QWigdet对象，所以可以将业务实体放入该QWidget对象中。
+
+
+Qt如何查询帮助文档，F1
+
+Qt中的.pro文件为程序的项目文件，会交付qmake处理。
+
+Qt中的每一个wigdet都会有一个父对象。可以使用函数指定父对象，也可以在构造时父对象的传递参数

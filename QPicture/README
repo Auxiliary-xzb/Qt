@@ -1,0 +1,20 @@
+    The QPicture class is a paint device that records and replays QPainter commands.
+    A picture serializes painter commands to an IO device in a platform-independent format.
+They are sometimes referred to as meta-files.
+    Qt pictures use a proprietary binary format. Unlike native picture (meta-file) formats on
+many window systems, Qt pictures have no limitations regarding their contents. Everything
+that can be painted on a widget or pixmap (e.g., fonts, pixmaps, regions, transformed graphics,
+etc.) can also be stored in a picture.
+    QPicture is resolution independent, i.e. a QPicture can be displayed on different devices
+(for example svg, pdf, ps, printer and screen) looking the same. This is, for instance, needed
+for WYSIWYG print preview. QPicture runs in the default system dpi, and scales the painter
+to match differences in resolution depending on the window system.
+
+    QPicture类是绘图设备，记录和显示QPainter的命令。
+    QPicture序列化画家的命令到一个独立平台格式的IO设备。
+    Qt pictures使用一种合适的二进制格式。不像在大多数窗口操作系统的本地的图片
+格式一样，Qt pictures没有注重内容的限制。任何东西都可以被画到wiget和pixmap上，
+也都可以保存在一个picture中。
+    QPicture是独立分辨率，例如一个QPicture可以被显示在不同的设备但看起来一样。
+例如，它需要WYSIWYG打印预览。QPicture运行以默认系统的dpi，并且根据窗口系
+统调整painter去匹配分辨率上的不同。

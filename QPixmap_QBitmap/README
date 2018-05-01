@@ -1,0 +1,55 @@
+QPixmap
+大致翻译：
+    QPixmap类是一个屏幕图像显示，可以用于绘图设备。
+    Qt提供四个类处理图像数据：QImage，QPixmap，QBitmap，QPitcture。QImage为I/O设计
+并对I/O进行了优化，并且允许对像素点进行直接修改。QPixmap被设计并且被优化用来在屏
+幕上显示图片。QBitmap是一个方便的类，继承于QPixmap，图像色深最大为1。如果QPixmap
+对象是bitmap则，isQBitmap()函数返回true，否则返回false。QPicture类是一个绘图设备，该设
+备保存和重显QPainter的命令。
+    一个QPixmap可以很轻易的通过使用一个QLabel或者QAbstractButton的子类在屏幕上显示，
+QLabel有一个pixmap属性，QAbstractButton有一个icon属性。
+    QPixmap对象可以通过值发送，因为QPixmap类使用了隐式的数据共享。查看Implicit Data
+Sharing文档获取更多。
+    注意pixmap的像素点数据是内部数据，并且被底层的窗口系统关系。因为QPixmap是一个
+QPaintDevice子类，所以QPainter可以直接在pixmap上绘图。像素点只能被QPainter的函数或
+者由QPixmap转换到QImage时使用。然而fill()函数可以通过给定的颜色来初始化pixmap。
+    有很多函数实现QImage和QPixmap之间的转换。通常，在QImage对象被转换为QPixmap并
+显示在屏幕之前，QImage类用于加载一个image文件和选择性的操作像素点数据。可选则的，
+如果没有操作，图片文件可以直接加载为QPixmap文件。
+     QPixmap提供许多函数可以获取一系列的pixmap的信息。另外，一些函数支持pixmap的转
+换。
+
+    Reading and Writing Image Files
+    QPixmap提供一些方法去读取图片文件：图片文件可以在QPixmap的构造器中加载或使用
+load()或loadFromData()函数。当加载一个图片时，图片文件可以是磁盘上的文件，或者应用
+的资源文件。详情查看，Qt Resource System。
+    简单的调用save()函数保存一个QPixmap对象。
+
+    Pixmap Conversion
+    QPixmap对象可以通过调用toImage()函数转换为QImage对象，同样的，QImage对象可以
+调用fromImage()函数转换为QPixmap对象。
+
+    Pixmap Transformations
+    QPixmap支持一系列的函数从原始的图片上创建一个新的pixmap。
+    scaled()，scaledToWidth()和scaledToHeight()函数返回一个伸缩了的pixmap，copy()返回一个
+与原图片一样的副本。
+    transformed()函数返回一个pixmap的副本，该副本是使用给定的转换模板和转化模式进行
+转换了的：通常，转换模板被调整去补偿不想要的转换，例如transformed()返回包含所有原
+pixmap的转换点的最小的pixmap。theMatrix()函数返回被转换的pixmap的实际的模板。
+
+
+QBitmap:
+    QBitmap是一个黑白脱屏绘图设备，主要用于创建QCursor和QBrush对象的，构造QRegion
+对象，和设置widgets和pixmap的标志。
+    绘图时使用Qt::color0设置位图的位为0，使用Qt::color1设置位图的位为1。注意使用Qt::black
+和Qt::white是不起作用的，因为QColor::pixel()的值中0不是black必要的，1不是white必要的。
+
+
+
+QBitmap和QPixmap：
+    QBitmap是QPixmap的一个子类。
+    QPixmap是用来画彩色图片，QBitmap是用来画黑白图片。
+
+
+对于背景为透明的图片，QBitmap显示时，背景会变为黑色。
+对于背景不为透明的图片（例如白色），QBitmap显示时就会为透明。

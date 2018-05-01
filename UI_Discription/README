@@ -1,0 +1,30 @@
+如何添加资源文件：
+    1.将资源文件放在项目目录下
+    2.右击项目，添加新文件
+    3.选择Qt
+    4.选择Qt Resource File
+    5.右击资源文件下*.qrc，选择open in edit
+    6.需要先添加前缀，再选择需要添加的资源文件。
+
+注意：
+    没有将资源文件添加到项目目录下的话，添加资源时会报错。
+
+常用控件：
+1.按钮类
+QPushButton
+QToolButton
+QRadioButton
+2.item
+QListWidget
+3.容器类
+QStackWidget
+QWidget
+QFrame
+4.编辑类
+QComboBox
+QLineEdit
+QTextEdit
+5.显示类
+QLabel
+QLCDNumber
+QProgressBar

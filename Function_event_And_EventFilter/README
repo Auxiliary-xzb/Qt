@@ -1,0 +1,171 @@
+注意：
+    一般最好不要直接改变event()函数，可以通过改QEvent的子类比较好。
+因为可能会忘掉处理事件后，其他的事件还是需要分发。
+
+    如果传入的事件已经被识别和处理，则需要返回true，否则返回false
+如果返回值为true，那么Qt会认为这个事件已经处理完毕，不会再将这
+个事件发送给其他对象。而是会继续处理事件队列中的下一事件。
+    在event()函数中，调用事件对象的accept()和ignore()函数时没有作用的
+不会影响到事件的传播。
+
+
+    重写event函数可以进行过滤，但是部件很多时，全部重写部件的event
+函数肯定是个不明智的选择。
+
+[virtual] bool QObject::event(QEvent *e)
+    This virtual function receives events to an object and should return true if the event e was recognized and processed.
+    The event() function can be reimplemented to customize the behavior of an object.
+    Make sure you call the parent event class implementation for all the events you did not handle.
+    Example:
+
+      class MyClass : public QWidget
+      {
+          Q_OBJECT
+
+      public:
+          MyClass(QWidget *parent = 0);
+          ~MyClass();
+
+          bool event(QEvent* ev)
+          {
+              if (ev->type() == QEvent::PolishRequest) {
+                  // overwrite handling of PolishRequest if any
+                  doThings();
+                  return true;
+              } else  if (ev->type() == QEvent::Show) {
+                  // complement handling of Show if any
+                  doThings2();
+                  QWidget::event(ev);
+                  return true;
+              }
+              // Make sure the rest of events are handled
+              return QWidget::event(ev);
+          }
+      };
+
+大致翻译：
+    该虚函数从一个对象中接收事件，当事件e被识别和处理后，该函数返回true。
+    event()函数可以根据对象的行为进行自定义的实现。
+    确保你调用的父事件类实现了所有你未设置处理函数的事件。
+    代码如上：
+
+
+[virtual] bool QObject::eventFilter(QObject *watched, QEvent *event)
+    Filters events if this object has been installed as an event filter for the watched object.
+    In your reimplementation of this function, if you want to filter the event out, i.e. stop
+it being handled further, return true; otherwise return false.
+    Example:
+
+      class MainWindow : public QMainWindow
+      {
+      public:
+          MainWindow();
+
+      protected:
+          bool eventFilter(QObject *obj, QEvent *ev);
+
+      private:
+          QTextEdit *textEdit;
+      };
+
+      MainWindow::MainWindow()
+      {
+          textEdit = new QTextEdit;
+          setCentralWidget(textEdit);
+
+          textEdit->installEventFilter(this);
+      }
+
+      bool MainWindow::eventFilter(QObject *obj, QEvent *event)
+      {
+          if (obj == textEdit) {
+              if (event->type() == QEvent::KeyPress) {
+                  QKeyEvent *keyEvent = static_cast<QKeyEvent*>(event);
+                  qDebug() << "Ate key press" << keyEvent->key();
+                  return true;
+              } else {
+                  return false;
+              }
+          } else {
+              // pass the event on to the parent class
+              return QMainWindow::eventFilter(obj, event);
+          }
+      }
+
+    Notice in the example above that unhandled events are passed to the base class's eventFilter()
+function, since the base class might have reimplemented eventFilter() for its own internal purposes.
+    Warning: If you delete the receiver object in this function, be sure to return true. Otherwise,
+Qt will forward the event to the deleted object and the program might crash.
+
+大致翻译：
+    如果参数watched对象已经安装了一个事件过滤器，那么将过滤事件。
+    在你重新实现该函数时，如果你想将参数event 过滤出去，例如在处理完后返回true，
+否则返回false。
+    例子代码如上：
+    注意，在上述例子中没有处理的事件被发送到基类的eventFilter()函数，因此基类可能
+因为其内部的原因重新实现了eventFilter()。
+    警告，如果你删除了接收对象在该函数中，那么一定要返回true。否则，Qt将运送event
+给以删除的对象，这会导致程序崩溃。
+
+void QObject::installEventFilter(QObject *filterObj)
+    Installs an event filter filterObj on this object. For example:
+
+        monitoredObj->installEventFilter(filterObj);
+
+    An event filter is an object that receives all events that are sent to this object. The filter can either
+stop the event or forward it to this object. The event filter filterObj receives events via its eventFilter()
+function. The eventFilter() function must return true if the event should be filtered, (i.e. stopped);
+otherwise it must return false.
+    If multiple event filters are installed on a single object, the filter that was installed last is activated first.
+    Here's a KeyPressEater class that eats the key presses of its monitored objects:
+
+                  class KeyPressEater : public QObject
+                  {
+                      Q_OBJECT
+                      ...
+
+                  protected:
+                      bool eventFilter(QObject *obj, QEvent *event);
+                  };
+
+                  bool KeyPressEater::eventFilter(QObject *obj, QEvent *event)
+                  {
+                      if (event->type() == QEvent::KeyPress) {
+                          QKeyEvent *keyEvent = static_cast<QKeyEvent *>(event);
+                          qDebug("Ate key press %d", keyEvent->key());
+                          return true;
+                      } else {
+                          // standard event processing
+                          return QObject::eventFilter(obj, event);
+                      }
+                  }
+
+    And here's how to install it on two widgets:
+
+                  KeyPressEater *keyPressEater = new KeyPressEater(this);
+                  QPushButton *pushButton = new QPushButton(this);
+                  QListView *listView = new QListView(this);
+
+                  pushButton->installEventFilter(keyPressEater);
+                  listView->installEventFilter(keyPressEater);
+
+    The QShortcut class, for example, uses this technique to intercept shortcut key presses.
+    Warning: If you delete the receiver object in your eventFilter() function, be sure to return true.
+If you return false, Qt sends the event to the deleted object and the program will crash.
+    Note that the filtering object must be in the same thread as this object. If filterObj is in a different
+thread, this function does nothing. If either filterObj or this object are moved to a different thread
+after calling this function, the event filter will not be called until both objects have the same thread
+affinity again (it is not removed).
+
+大致翻译：
+    在这个对象上安装一个事件过滤器filterObj。
+    事件过滤器是一个对象，该对象接收所有送往该过滤器宿主的的事件。过滤器可以将
+事件停止，也可以将事件传给宿主。事件过滤器filterObj通过它的eventFilter()函数接收事
+件。如果事件被过滤，事件过滤器必须返回true，否则必须返回false。
+    如果多个事件过滤器被安装到一个单独的对象上时，最后安装的过滤器，最先相应。
+    （文档中给出的实例需要好好看看）
+    警告：如果你在eventFilter()函数中delete了接收者对象，确保该函数返回真，如果你
+返回false，Qt发送事件到以销毁的对象上，程序会崩溃。
+    注意：过滤器和被安装过滤器的组件必须是同线程的，如果filterObj在不同的线程，该函数什么
+都不干。如果filterObj或者该对象被移动到不同的线程之后再次调用该函数，事件过滤器
+将不能被调用直到两者再次到相同的进程中。

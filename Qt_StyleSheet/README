@@ -1,0 +1,30 @@
+可以在帮助文档中查看详情。
+
+Qt样式表：
+    Qt样式表的思想很大程度上来自于HTML的层叠样式表(css)，通过调用
+QWidget::setStyleSheet()或QApplication::setStyleSheet()，可以为一个独立的子
+部件，整个窗口，甚至整个应用程序制定一个样式表。
+
+样式表的基础语法：
+    Qt样式表与CSS的语法规则几乎完全相同。
+    一个样式表由一系列的样式规则构成。每个样式规则都有着下面的形式:
+        selector{attribute: value}
+     ·选择器（selector）部分通常是一个类名（例如QComboBox），当然
+        也可以是其他语法。
+     ·属性（attribute）部分是一个样式表属性的名称，值（value）部分是
+        赋予该属性的值。
+     为了简单方便，我们还可以使用简化形式：
+        selector， selector2，。。。，selectorN{
+            attribute: value1;
+            attribute2: value2;
+            ...
+            attributeN:valueN;
+        }
+
+CSS 语法
+    CSS 规则由两个主要的部分构成：选择器，以及一条或多条声明。
+        selector {declaration1; declaration2; ... declarationN }
+    选择器通常是您需要改变样式的 HTML 元素。
+    每条声明由一个属性和一个值组成。
+    属性（property）是您希望设置的样式属性（style attribute）。每个属性有一个值。属性和值被冒号分开。
+        selector {property: value}

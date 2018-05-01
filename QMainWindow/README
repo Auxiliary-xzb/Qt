@@ -1,0 +1,1 @@
+在Qt中有一个特点，添加控件不是setWidget就是addWidget。

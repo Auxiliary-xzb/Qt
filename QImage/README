@@ -1,0 +1,13 @@
+    The QImage class provides a hardware-independent image representation that allows
+direct access to the pixel data, and can be used as a paint device.
+    Because QImage is a QPaintDevice subclass, QPainter can be used to draw directly onto
+images. When using QPainter on a QImage, the painting can be performed in another thread
+than the current GUI thread.
+    The QImage class supports several image formats described by the Format enum. These
+include monochrome, 8-bit, 32-bit and alpha-blended images which are available in all versions
+of Qt 4.x.
+
+    QImage类提供独立于硬件的图片，允许修改像素点数据，可以当做绘图设备使用。
+    因为QImage是QPaintDevice的子类，QPainter可以直接在图片上绘图，当在QImage
+中直接使用QPainter，绘图可以在当前的GUI线程之外进行绘图。
+    QImage类支持一些格式描述，使用Format提供的枚举。

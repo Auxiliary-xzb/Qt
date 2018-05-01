@@ -1,0 +1,5 @@
+这几种对话框均在QMessageBox中已经生成了静态类了
+所以只需要使用类名调用静态类即可。
+
+
+可以在帮助文档中输入dialog，选择windows dialog可以查看qt提供的所有dialog种类。

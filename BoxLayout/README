@@ -1,0 +1,68 @@
+QBoxLayout：
+        The QBoxLayout class lines up child widgets horizontally or vertically.QBoxLayout takes the space it gets
+(from its parent layout or from the parentWidget()), divides it up into a row of boxes, and makes each managed
+widget fill one box.
+        If the QBoxLayout's orientation is Qt::Horizontal the boxes are placed in a row, with suitable sizes. Each
+widget (or other box) will get at least its minimum size and at most its maximum size. Any excess space is shared
+according to the stretch factors (more about that below).
+        If the QBoxLayout's orientation is Qt::Vertical, the boxes are placed in a column, again with suitable sizes.
+        The easiest way to create a QBoxLayout is to use one of the convenience classes, e.g. QHBoxLayout (for
+Qt::Horizontal boxes) or QVBoxLayout (for Qt::Vertical boxes). You can also use the QBoxLayout constructor
+directly, specifying its direction as LeftToRight, RightToLeft, TopToBottom, or BottomToTop.
+        If the QBoxLayout is not the top-level layout (i.e. it is not managing all of the widget's area and children),
+you must add it to its parent layout before you can do anything with it. The normal way to add a layout is by
+calling parentLayout->addLayout().
+        Once you have done this, you can add boxes to the QBoxLayout using one of four functions:
+               1. addWidget() to add a widget to the QBoxLayout and set the widget's stretch factor. (The stretch factor
+                   is along the row of boxes.)
+               2.addSpacing() to create an empty box; this is one of the functions you use to create nice and spacious dialogs.
+                  See below for ways to set margins.
+                3.addStretch() to create an empty, stretchable box.
+                4.addLayout() to add a box containing another QLayout to the row and set that layout's stretch factor.
+        Use insertWidget(), insertSpacing(), insertStretch() or insertLayout() to insert a box at a specified position in the layout.
+        QBoxLayout also includes two margin widths:
+                1.setContentsMargins() sets the width of the outer border on each side of the widget. This is the width of the
+                   reserved space along each of the QBoxLayout's four sides.
+                2.setSpacing() sets the width between neighboring boxes. (You can use addSpacing() to get more space at a particular spot.)
+        The margin default is provided by the style. The default margin most Qt styles specify is 9 for child widgets and 11 for
+windows. The spacing defaults to the same as the margin width for a top-level layout, or to the same as the parent layout.
+        To remove a widget from a layout, call removeWidget(). Calling QWidget::hide() on a widget also effectively removes the widget
+from the layout until QWidget::show() is called.
+        You will almost always want to use QVBoxLayout and QHBoxLayout rather than QBoxLayout because of their convenient constructors.
+
+大致翻译：
+        QBoxLayout类以水平或垂直的方式排列部件。QBoxLayout从他的父layout或者从父Widget获取空间
+划分这些空间成一排或一列许多的盒子。然后将每个已经管理的空间填进一个盒子。
+        如果QBoxLayout的方向是Qt::Horizontal这些盒子将以合适的大小被排放成一排。每个部件将或者
+其他盒子将得到至少它的最小的大小和至多它的最大大小。任何过多的空间将根据扩展因子进行共享。
+        如果QBoxLayout的方向是Qt::Vertical，盒子将被放置在一列中同样是以合适的大小。
+        最简单的方式创建一个QBoxLayout是使用方便的类中的一个，例如QHBoxLayout（水平盒子）或者
+QVBoxLayout（垂直盒子）。你仍可以直接使用QBoxLayout的构造器，指定它的方向，方向有如下选择：
+LeftToLeft，RighhtToLeft,TopToBottom或者BottomToTop.
+        如果QBoxLayout不是顶层布局（例如，它不是管理所有组件和子组件），你必须在使用它前将它添
+加到它的父布局。添加一个布局的常用方法是调用parentLayout->addLayout（）。
+        一旦你完成这些，你可以添加盒子到QBoxLayout使用以下四种方法中的任意一种：
+                1.addWidget（），添加一个部件到QBoxLayout并且设置部件扩展因子（扩展因子是沿着一排的盒子）
+                2.addSpacing（），创建一个空盒子，这是一种创建完美和外表美观的对话框的一种方法。参考
+                    设置margins（外边界）的方法。
+                3.addStretch（），创建一个空的，可伸展的盒子，就是讲空白区域按比例分配。
+                4.addLayout（），添加一个包括其他QLayout的盒子到这一行，并且设置layout的扩展因子。
+        使用insertWidget(),insertSpacing(),insertStretch()或者insertLayout()插入一个盒子到布局的指定的位置。
+        QBoxLayout仍包含两个外边距宽度：
+            1.setContentMargins()，设置每个部件的外边距，这是部件在QBoxLayout的四边上的预留空间。
+            2.setSpacing()，设置两个相邻盒子的距离。（你可以是用addSpacing()获得更多的空间在一个特有的点）。
+        外边距是风格默认提供的，Qt风格默认的子部件的外边距是9，窗口的外边距是11。顶层的空白空间默认
+是和外边距相同的，或者和父布局相同。
+        从布局中移除一个部件，调用removeWidget().调用QWidget::hide()也可以将部件从布局中移除直到
+QWidget::show()被调用。
+        你将会更多的使用QVBoxLayout和QHBoxLayout而不是QBoxLayout，因为他们有简便的构造器。
+
+
+        综上，QBoxLayout创建一个盒型布局，共有四种方向，从上至下，从下至上，从左至右，从右
+至左，QBoxLayout还有两种简便的创建方式，QHBoxLayout和QVBoxLayout，QHBoxLayout默认是创
+建一个水平从左至右的盒子，QVBoxLayout默认是创建一个垂直从上至下的盒子。
+        在提供了四种方法向QBoxLayout中添加东西，
+            1.addSpacing，是在部件结尾处添加空白
+            2.addWidget，向其添加部件
+            3.addLayout，在最后一个盒子的尾部添加新的layout。
+            4.add
