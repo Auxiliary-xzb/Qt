@@ -1,0 +1,218 @@
+﻿<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=radar-aqi
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="width: 500px; height: 500px;"></div>
+
+        <script type="text/javascript" src="echarts.js"></script>
+        <!-- Uncomment this line if you want to dataTool extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use gl extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to echarts-stat extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use map
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/china.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/world.js"></script>
+        -->
+        <!-- Uncomment these two lines if you want to use bmap extension
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+        -->
+
+        <script type="text/javascript">
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+
+            function setSize(size) {
+                var dom = document.getElementById("container");
+                dom.style.width = size["width"] + "px";
+                dom.style.height = size["height"] + "px";
+                myChart.resize();
+            }
+
+            var option;
+
+            // Schema:
+            // date,AQIindex,PM2.5,PM10,CO,NO2,SO2
+            var dataBJ =
+                [55,9,56,0.46,18,6,1];
+
+            var dataGZ = [
+                [26,37,27,1.163,27,13,1],
+
+            ];
+
+            var dataSH = [
+                [91,45,125,0.82,34,23,1],
+
+            ];
+
+            var lineStyle = {
+                normal: {
+                    width: 1,
+                    opacity: 0.5
+                }
+            };
+
+            function init (str) {
+                option = {
+                    backgroundColor: '#161627',
+                    title: {
+                        text: 'AQI - 雷达图',
+                        left: 'center',
+                        textStyle: {
+                            color: '#eee'
+                        }
+                    },
+                    legend: {
+                        bottom: 5,
+                        data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎'],
+                        itemGap: 20,
+                        textStyle: {
+                            color: '#fff',
+                            fontSize: 14
+                        },
+                        selectedMode: 'single'
+                    },
+                     //visualMap: {
+                     //    show: true,
+                     //    min: 0,
+                     //    max: 20,
+                     //    dimension: 6,
+                     //    inRange: {
+                     //        colorLightness: [0.5, 0.8]
+                     //    }
+                     //},
+                    radar: {
+                        indicator: [
+                            {name: '周一', max: 40000},
+                            {name: '周二', max: 40000},
+                            {name: '周三', max: 40000},
+                            {name: '周四', max: 40000},
+                            {name: '周五', max: 40000},
+                            {name: '周六', max: 40000},
+                            {name: '周日', max: 40000}
+                        ],
+                        shape: 'circle',
+                        splitNumber: 5,
+                        name: {
+                            textStyle: {
+                                color: 'rgb(238, 197, 102)'
+                            }
+                        },
+                        splitLine: {
+                            lineStyle: {
+                                color: [
+                                    'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
+                                    'rgba(238, 197, 102, 0.4)', 'rgba(238, 197, 102, 0.6)',
+                                    'rgba(238, 197, 102, 0.8)', 'rgba(238, 197, 102, 1)',
+                                    'rgba(238, 197, 102, 0.1)', 'rgba(238, 197, 102, 0.2)',
+                                    'rgba(238, 197, 102, 0.4)', 'rgba(238, 197, 102, 0.6)',
+                                ].reverse()
+                            }
+                        },
+                        splitArea: {
+                            show: false
+                        },
+                        axisLine: {
+                            lineStyle: {
+                                color: 'rgba(238, 197, 102, 0.5)'
+                            }
+                        }
+                    },
+                    series: [
+                        {
+                            name: '邮件营销',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: [str["data1"]],
+                            symbol: 'none',
+                            itemStyle: {
+                                color: '#F9713C'
+                            },
+                            areaStyle: {
+                                opacity: 0.1
+                            }
+                        },
+                        {
+                            name: '联盟广告',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: [str["data2"]],
+                            symbol: 'none',
+                            itemStyle: {
+                                color: '#B3E4A1'
+                            },
+                            areaStyle: {
+                                opacity: 0.05
+                            }
+                        },
+                        {
+                            name: '视频广告',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: [str["data3"]],
+                            symbol: 'none',
+                            itemStyle: {
+                                color: 'rgb(238, 197, 102)'
+                            },
+                            areaStyle: {
+                                opacity: 0.05
+                            }
+                        },
+                        {
+                            name: '直接访问',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: [str["data4"]],
+                            symbol: 'none',
+                            itemStyle: {
+                                color: '#87CEFA'
+                            },
+                            areaStyle: {
+                                opacity: 0.1
+                            }
+                        },
+                        {
+                            name: '搜索引擎',
+                            type: 'radar',
+                            lineStyle: lineStyle,
+                            data: [str["data5"]],
+                            symbol: 'none',
+                            itemStyle: {
+                                color: '#FF0000'
+                            },
+                            areaStyle: {
+                                opacity: 0.1
+                            }
+                        },
+                    ]
+                };
+
+                if (option && typeof option === 'object') {
+                    myChart.setOption(option);
+                }
+            }
+
+            var initDatas = {
+                "data1": [0, 0, 0, 0, 0, 0, 0],
+                "data2": [0, 0, 0, 0, 0, 0, 0],
+                "data3": [0, 0, 0, 0, 0, 0, 0],
+                "data4": [0, 0, 0, 0, 0, 0, 0],
+                "data5": [0, 0, 0, 0, 0, 0, 0],
+            };
+
+            init(initDatas);
+        </script>
+    </body>
+</html>
+    

@@ -33,11 +33,11 @@ readAll()，三者中的一个函数直到没有数据可以读取。
 
 信号问题：
     不同于其他QIODevice的实现，QTcpSocket和QFile不会发射aboutToClose(), bytesWritten(),
-和 readyRead()信号。这个实现的细节表白QFile不适合读取或写入某些种类的文件，例如
-Unit平台的设备文件。
+和 readyRead()信号。这个实现的细节表明QFile不适合读取或写入某些种类的文件，例如
+Unix平台的设备文件。
 
 平台问题：
-    文件权限管理的不同在不同的平台，在类Unix系统中，不能写的目录是不能创建文件的。
+    文件权限管理在不同的平台，在类Unix系统中，不能写的目录是不能创建文件的。
 但是在Windows上不总会出现这种情况，"My Documents"目录是不能写的，但是仍然可以
 在该目录创建文件。
     Qt's understanding of file permissions is limited, which affects especially the QFile::setPermissions() function.

@@ -12,6 +12,7 @@ TcpServer::TcpServer(QWidget *parent) :
 
     ui->setupUi(this);
 
+
     //创建QTcpServer对象
     tcpServer = new QTcpServer(this);
     //指定监听的端口和地址。
@@ -68,4 +69,5 @@ void TcpServer::on_pushButton_Send_clicked()
     QString text = ui->textEdit_Write->toPlainText();
     //将数据写入通信套接字tcpSocket
     tcpSocket->write(text.toUtf8().data());
+    ui->textEdit_Write->setText("");
 }

@@ -28,30 +28,51 @@ void Widget::paintEvent(QPaintEvent *event){
     //q.drawPixmap(this->rect(), QPixmap("../image/bk.jpg"));
 
     //定义画笔
-    QPen pen;
-    pen.setWidth(5);    //设置线宽度
-    pen.setColor(Qt::red);//设置颜色
-    pen.setStyle(Qt::DashDotDotLine);//设置画笔风格
+    //QPen pen;
+    //pen.setWidth(2);    //设置线宽度
+    //pen.setColor(Qt::red);//设置颜色
+    //pen.setStyle(Qt::DashDotDotLine);//设置画笔风格
 
-    QBrush brush;
-    brush.setColor(Qt::black);
-    brush.setStyle(Qt::Dense1Pattern);
+    //定义画刷子
+    //QBrush brush;
+    //brush.setColor(Qt::blue);
+    //brush.setStyle(Qt::Dense7Pattern);
 
     //将画笔交给画家
-    q.setPen(pen);
-    q.setBrush(brush);
+   // q.setPen(pen);
+    //q.setBrush(brush);
 
     //画直线
-    q.drawLine(50, 50, 300, 300);
+    //q.drawLine(50, 50, 300, 300);
     //画矩形
-    q.drawRect(100, 100, 50, 100);
+    //q.drawRect(100, 100, 50, 100);
     /*
      * 以画椭圆的基础来画圆， Ellipse为椭圆。
         */
-    q.drawEllipse(QPoint(50, 50), 40, 40);
-    q.drawEllipse(this->rect());
+    //q.drawEllipse(QPoint(50, 50), 40, 40);
+    //q.drawEllipse(this->rect());
 
-    q.drawPixmap(x, 100, 80, 80, QPixmap("../image/bk.jpg"));
+    //q.drawPixmap(x, 100, 80, 80, QPixmap("../image/bk.jpg"));
+
+
+    //////////////////////////////////////////////////////////高级操作///////////////////////////////////////////
+    //抗锯齿能力
+    q.setRenderHint(QPainter::Qt4CompatiblePainting);
+    q.drawEllipse(QPoint(100, 100), 20, 20);
+
+    //移动画家
+    q.translate(100, 0);
+     q.drawEllipse(QPoint(100, 100), 20, 20);
+
+     //保存画家的状态
+     q.save();
+     q.translate(100, 0);
+     q.drawRect(100, 100,  50, 50);
+
+     //恢复画家状态
+     q.restore();
+     q.drawRect(100, 100,  80, 80);
+
     q.end();//指定QPainter为不活动。
 }
 

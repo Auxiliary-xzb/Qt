@@ -18,3 +18,7 @@ to match differences in resolution depending on the window system.
     QPicture是独立分辨率，例如一个QPicture可以被显示在不同的设备但看起来一样。
 例如，它需要WYSIWYG打印预览。QPicture运行以默认系统的dpi，并且根据窗口系
 统调整painter去匹配分辨率上的不同。
+
+
+它是保存一串painter的指令，因此在生成的文件中什么都看不见，只有在下一次调用
+load加载这些指令之后才能让画家重现。

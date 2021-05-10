@@ -25,7 +25,7 @@ Widget::Widget(QWidget *parent)
      *大概该语句在前是，那么先出现了窗口四，后出现了窗口一
      * 那么可以说槽函数的执行是根据设置前的顺序来执行的。
     */
-    connect(button_1, &QPushButton::clicked, this, &Widget::DealButton_4);
+    //connect(button_1, &QPushButton::clicked, this, &Widget::DealButton_4);
 
     /*
      * 此方法为Qt4的信号与槽的实现方式
@@ -45,8 +45,8 @@ Widget::Widget(QWidget *parent)
      * method： 由SLOT宏包裹的槽
     */
     //button_1按下回有反应，但是button_2没有反应
-    connect(button_1, SIGNAL(clicked(bool)), this, SLOT(DealButton_1()));
-    connect(button_2, SIGNAL(clicked(bool)), this, SLOT(Widget::DealButton_2()));
+    //connect(button_1, SIGNAL(clicked(bool)), this, SLOT(DealButton_1()));
+    //connect(button_2, SIGNAL(clicked(bool)), this, SLOT(Widget::DealButton_2()));
 
     /*
     * 在Qt5中提供的信号与槽的实现方式

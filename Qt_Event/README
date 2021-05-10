@@ -1,5 +1,5 @@
     The QWidget class is the base class of all user interface objects.
-    QWiget鳄梨是所有用户界面对象的基类，所以所有的事件都在QWidget中可以查看。
+    QWiget是所有用户界面对象的基类，所有的事件都在QWidget中可以查看。
 
     在Qt中信号与槽，消息机制都可以达到相同的效果，但是两者还是有区别的，但是
 区别现在不容易深究，设计到很多Qt内部的东西。
@@ -38,7 +38,7 @@ spontaneous()：
 QWidget::mouseMoveEvent()。QObject::installEventFilter()允许一个object拦截另一个
 object的指定事件。
     基本的QEvent仅包含一个事件种类的参数和一个“accept”标志。该标志使用
-accept()设置，使用ignore()清除。默认它是设置了的，但是不要依赖这个，因此
+accept()设置，使用ignore()清除。默认它是设置了的，但是不要依赖这个，因为
 子类在他们的构造器中选择清除它。
     QEvent子类包含额外的参数来描述特别的事件。
 

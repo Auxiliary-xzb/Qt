@@ -19,3 +19,6 @@ HEADERS  += widget.h
 
 RESOURCES += \
     image.qrc
+
+DISTFILES += \
+    README

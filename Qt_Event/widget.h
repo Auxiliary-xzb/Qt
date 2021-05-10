@@ -22,11 +22,10 @@ public:
     ~Widget();
 
 public:
-    int count, click_times, click_times_2, id, count_2,timer_id;
+    int count, count_2, click_times, click_times_2, timer_id, timer_id2;
 
 private:
     Ui::Widget *ui;
-    QTimer *timer;
 };
 
 #endif // WIDGET_H

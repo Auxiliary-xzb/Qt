@@ -2,6 +2,8 @@
 #include "ui_widget.h"
 #include <QPainter>
 #include <QBitmap>
+#include <QPixmap>
+#include <QImage>
 
 Widget::Widget(QWidget *parent) :
     QWidget(parent),
@@ -26,6 +28,23 @@ Widget::Widget(QWidget *parent) :
     p.end();
     //保存绘图设备所产生的绘图
     pixmap.save("../pixmap.jpg");
+
+    //绘图设备， 400， 400
+    QImage img(400, 300, QImage::Format_ARGB32);
+    //画家
+    QPainter q;
+    //画家开始在绘图设备上绘图
+    q.begin(&img);
+    //填充背景色，因为保存图片时默认背景是黑色
+    q.fillRect(img.rect(), QBrush(Qt::red));
+    img.fill(Qt::red);
+    //进行绘图
+    q.drawImage(200, 200, QImage("../image/bk.jpg"));
+    //结束画图
+    q.end();
+    //保存绘图设备所产生的绘图
+    img.save("../imgmap.jpg");
+
 }
 
 Widget::~Widget()

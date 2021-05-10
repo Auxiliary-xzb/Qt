@@ -1,0 +1,203 @@
+﻿<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=multiple-y-axis
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="width: 500px; height: 500px;"></div>
+
+        <script type="text/javascript" src="echarts.js"></script>
+        <!-- Uncomment this line if you want to dataTool extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use gl extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to echarts-stat extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use map
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/china.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/world.js"></script>
+        -->
+        <!-- Uncomment these two lines if you want to use bmap extension
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+        -->
+
+        <script type="text/javascript">
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+
+
+            function setSize(size) {
+                var dom = document.getElementById("container");
+                dom.style.width = size["width"] + "px";
+                dom.style.height = size["height"] + "px";
+                myChart.resize();
+            }
+
+            var colors = ['#5470C6', '#91CC75', '#EE6666', '#A52A2A', '#FFA500'];
+
+            function init(str) {
+                var option = {
+                    color: colors,
+
+                    tooltip: {
+                        trigger: 'axis',
+                        axisPointer: {
+                            type: 'cross'
+                        }
+                    },
+                    grid: {
+                        left: '20%',
+                        right: '20%'
+                    },
+                    toolbox: {
+                        feature: {
+                            dataView: {show: true, readOnly: false},
+                            restore: {show: true},
+                            saveAsImage: {show: true}
+                        }
+                    },
+                    legend: {
+                        data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+                    },
+                    xAxis: [
+                        {
+                            type: 'category',
+                            axisTick: {
+                                alignWithLabel: true
+                            },
+                            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+                        }
+                    ],
+                    yAxis: [
+                        {
+                            type: 'value',
+                            name: '邮件营销',
+                            position: 'right',
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: colors[0]
+                                }
+                            },
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        {
+                            type: 'value',
+                            name: '联盟广告',
+                            position: 'right',
+                            offset: 80,
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: colors[1]
+                                }
+                            },
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        {
+                            type: 'value',
+                            name: '视频广告',
+                            position: 'left',
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: colors[2]
+                                }
+                            },
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        {
+                            type: 'value',
+                            name: '直接访问',
+                            position: 'left',
+                            offset: 80,
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: colors[3]
+                                }
+                            },
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        },
+                        {
+                            type: 'value',
+                            name: '搜索引擎',
+                            position: 'left',
+                            offset: 160,
+                            axisLine: {
+                                show: true,
+                                lineStyle: {
+                                    color: colors[4]
+                                }
+                            },
+                            axisLabel: {
+                                formatter: '{value}'
+                            }
+                        }
+                    ],
+                    series: [
+                        {
+                            name: '邮件营销',
+                            type: 'bar',
+                            data: str["data1"]
+                        },
+                        {
+                            name: '联盟广告',
+                            type: 'bar',
+                            yAxisIndex: 1,
+                            data: str["data2"]
+                        },
+                        {
+                            name: '视频广告',
+                            type: 'line',
+                            yAxisIndex: 2,
+                            data: str["data3"]
+                        },
+                        {
+                            name: '直接访问',
+                            type: 'bar',
+                            yAxisIndex: 3,
+                            data: str["data4"]
+                        },
+                        {
+                            name: '搜索引擎',
+                            type: 'line',
+                            yAxisIndex: 4,
+                            data: str["data5"]
+                        }
+                    ]
+                };
+
+                if (option && typeof option === 'object') {
+                    myChart.setOption(option);
+                }
+            }
+
+            var initDatas = {
+                "data1": [0, 0, 0, 0, 0, 0, 0],
+                "data2": [0, 0, 0, 0, 0, 0, 0],
+                "data3": [0, 0, 0, 0, 0, 0, 0],
+                "data4": [0, 0, 0, 0, 0, 0, 0],
+                "data5": [0, 0, 0, 0, 0, 0, 0],
+            };
+
+            init(initDatas);
+        </script>
+    </body>
+</html>
+    

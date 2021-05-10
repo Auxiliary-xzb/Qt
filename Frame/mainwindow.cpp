@@ -1,6 +1,7 @@
 #include "mainwindow.h"
 #include <QDialog>
 #include <QLayout>
+#include <QToolButton>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -22,9 +23,11 @@ MainWindow::MainWindow(QWidget *parent)
 
     //添加工具栏
     toolbar = new QToolBar(this);
-    button_1 = new QPushButton();
+    button_1 = new QToolButton();
     //设置按钮的格式（图片填满按钮）
-    button_1->setStyleSheet("border-image:url(://20.jpg)");
+    button_1->setIcon(QIcon(":/20.jpg"));
+    button_1->setToolButtonStyle(Qt::ToolButtonIconOnly);
+    button_1->setAutoRaise(true);
     toolbar->addWidget(button_1);
     toolbar->setMinimumHeight(25);
     addToolBar(toolbar);

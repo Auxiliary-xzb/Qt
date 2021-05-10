@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/html">
+        <file>src/dark.js</file>
+        <file>src/echarts.js</file>
+        <file>src/echarts.min.js</file>
+        <file>src/line-stack.html</file>
+        <file>src/bar-background.html</file>
+        <file>src/pie-simple.html</file>
+        <file>src/radar-aqi.html</file>
+        <file>src/sunburst-simple.html</file>
+        <file>src/sunburst-visualMap.html</file>
+        <file>src/data-transform-filter.html</file>
+        <file>src/line-marker.html</file>
+        <file>src/multiple-y-axis.html</file>
+    </qresource>
+</RCC>

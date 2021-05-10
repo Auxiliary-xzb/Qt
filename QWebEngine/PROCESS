@@ -1,0 +1,107 @@
+﻿///*
+// * 将需要显示的数据传递给JS的init函数，数据以JSON的方式
+// * 传递
+// */
+// void MainWindow::on_pushButton_2_clicked() {
+//  QJsonObject sender;
+//  QJsonArray data1 = {1, 4, 56, 67, 88, 98, 93};
+//  QJsonArray data2 = {2, 56, 6, 71, 52, 98, 63};
+//  QJsonArray data3 = {12, 66, 64, 78, 2, 18, 33};
+//  QJsonArray data4 = {30, 52, 60, 71, 97, 8, 3};
+//  QJsonArray data5 = {22, 36, 16, 71, 62, 28, 13};
+//  sender.insert("data1", data1);
+//  sender.insert("data2", data2);
+//  sender.insert("data3", data3);
+//  sender.insert("data4", data4);
+//  sender.insert("data5", data5);
+
+//  QString str = QJsonDocument(sender).toJson();
+//  QString js = QString("init(%1)").arg(str);
+//  ui->web_2->page()->runJavaScript(js);
+//  ui->web_3->page()->runJavaScript(js);
+//}
+
+///*
+// * js: Uncaught ReferenceError : setSize is not defined
+// * 在第一次主窗口显示时就会有有reszieEvent事件，此时就需要
+// * js调用setSize函数，因为在html中的div一开始写死了echarts
+// * 的大小，所以需要上述加载完成后立马进行setSize。
+// * 出现上述情况是因为第一次主窗口在加载完时上述的load操作没
+// * 有完成。所以就需要一个标志判断上述加载完成，然后调用resizeEvent。
+// *
+// * 但显然不能调用resizeEvent，所以必须提供一个额外的槽函数，
+// * 使得resizeEvent通过判断标志来通知echarts改变大小
+// */
+
+///*
+// * 窗口大小改变之后就获取当前stackWidget中的widget大小
+// * 然后将该值传递个JS中的setSize函数，使其改变大小
+// */
+// void MainWindow::resizeEvent(QResizeEvent *event) {
+//  QJsonObject sender;
+//  sender.insert("width", ui->stackedWidget->currentWidget()->width());
+//  sender.insert("height", ui->stackedWidget->currentWidget()->height());
+
+//  QString str = QJsonDocument(sender).toJson();
+//  QString js = QString("setSize(%1)").arg(str);
+
+//  /*
+//   * 每次更改时都要提醒其他的所有窗口都更改
+//   */
+//  int total = ui->stackedWidget->count();
+//  for (int i = 0; i < total; i++) {
+//    QWebEngineView *view =
+//        dynamic_cast<QWebEngineView *>(ui->stackedWidget->widget(i));
+//    view->page()->runJavaScript(js);
+//  }
+//}
+
+{
+    type: 'value',
+    name: '邮件营销',
+    //min: 0,
+    //max: 250,
+    position: 'right',
+    axisLine: {
+        show: true,
+        lineStyle: {
+            color: colors[0]
+        }
+    },
+    axisLabel: {
+        formatter: '{value}'
+    }
+},
+{
+    type: 'value',
+    name: '联盟广告',
+    //min: 0,
+    //max: 250,
+    position: 'right',
+    offset: 80,
+    axisLine: {
+        show: true,
+        lineStyle: {
+            color: colors[1]
+        }
+    },
+    axisLabel: {
+        formatter: '{value}'
+    }
+},
+{
+    type: 'value',
+    name: '视频广告',
+    //min: 0,
+    //max: 25,
+    position: 'left',
+    axisLine: {
+        show: true,
+        lineStyle: {
+            color: colors[2]
+        }
+    },
+    axisLabel: {
+        formatter: '{value}'
+    }
+},

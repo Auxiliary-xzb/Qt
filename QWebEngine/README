@@ -1,0 +1,165 @@
+﻿在debug版本和release版本中出现的效果是不一样的，即第一次
+加载网页的速度是不一样。debug的第一加载会有延迟并且在窗口
+需要重绘时也会产生延迟，而在release版本中这些都不会产生。
+
+这里在构建QWebEngineView和html中js函数的链接时是一个递进
+的过程，第一步只是简单的包装函数，第二部开始思考传递值。
+这是一个很好的过程，在写反应堆加线程池程序的时候就是这样完
+成的，它虽然很慢，但是很有条理。
+
+
+//第一步让初始化工作成为一个函数并且图表初始值全为0
+function init () {
+    var option = {
+        title: {
+            text: '折线图堆叠'
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        legend: {
+            data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+        },
+        grid: {
+            left: '3%',
+            right: '4%',
+            bottom: '3%',
+            containLabel: true
+        },
+        toolbox: {
+            feature: {
+                saveAsImage: {}
+            }
+        },
+        xAxis: {
+            type: 'category',
+            boundaryGap: false,
+            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+        },
+        yAxis: {
+            type: 'value'
+        },
+        series: [
+            {
+                name: '邮件营销',
+                type: 'line',
+                stack: '总量',
+                data: [0, 0, 0, 0, 0, 0, 0]
+            },
+            {
+                name: '联盟广告',
+                type: 'line',
+                stack: '总量',
+                data: [0, 0, 0, 0, 0, 0, 0]
+            },
+            {
+                name: '视频广告',
+                type: 'line',
+                stack: '总量',
+                data: [0, 0, 0, 0, 0, 0, 0]
+            },
+            {
+                name: '直接访问',
+                type: 'line',
+                stack: '总量',
+                data: [0, 0, 0, 0, 0, 0, 0]
+            },
+            {
+                name: '搜索引擎',
+                type: 'line',
+                stack: '总量',
+                data: [0, 0, 0, 0, 0, 0, 0]
+            }
+        ]
+    };
+
+    if (option && typeof option === 'object') {
+        myChart.setOption(option);
+    }
+}  //init
+
+//可以调用该函数初始化图表
+//init();
+
+
+
+
+var datas = [
+    {"data1": [0, 0, 0, 0, 0, 0, 0]},
+    {"data2": [0, 0, 0, 0, 0, 0, 0]},
+    {"data3": [0, 0, 0, 0, 0, 0, 0]},
+    {"data4": [0, 0, 0, 0, 0, 0, 0]},
+    {"data5": [0, 0, 0, 0, 0, 0, 0]},
+]
+
+//第二步给函数添加参数，然c++可以给它传递数据，数据格式为JSON
+function init (str) {
+var option = {
+    title: {
+        text: '折线图堆叠'
+    },
+    tooltip: {
+        trigger: 'axis'
+    },
+    legend: {
+        data: ['邮件营销', '联盟广告', '视频广告', '直接访问', '搜索引擎']
+    },
+    grid: {
+        left: '3%',
+        right: '4%',
+        bottom: '3%',
+        containLabel: true
+    },
+    toolbox: {
+        feature: {
+            saveAsImage: {}
+        }
+    },
+    xAxis: {
+        type: 'category',
+        boundaryGap: false,
+        data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日']
+    },
+    yAxis: {
+        type: 'value'
+    },
+    series: [
+        {
+            name: '邮件营销',
+            type: 'line',
+            stack: '总量',
+            data: str["data1"]
+        },
+        {
+            name: '联盟广告',
+            type: 'line',
+            stack: '总量',
+            data: str["data2"]
+        },
+        {
+            name: '视频广告',
+            type: 'line',
+            stack: '总量',
+            data: str["data3"]
+        },
+        {
+            name: '直接访问',
+            type: 'line',
+            stack: '总量',
+            data: str["data4"]
+        },
+        {
+            name: '搜索引擎',
+            type: 'line',
+            stack: '总量',
+            data: str["data5"]
+        }
+    ]
+};
+
+if (option && typeof option === 'object') {
+    myChart.setOption(option);
+}
+}  //init
+
+init(datas);

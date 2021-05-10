@@ -39,7 +39,7 @@ void Widget::on_pushButton_ReadFile_clicked()
             ui->textEdit->append(QString("文件父目录：%1").arg(info.dir().dirName()));
             //created()返回一个QDateTime对象，调用的该对象的toString()方法来设置显示格式
             //具体的时间显示格式可以在帮助文档中查看
-            ui->textEdit->append(QString("文件创建时间：%1").arg(info.created().toString("yyyy-MM-dd hh:mm:ss")));
+            ui->textEdit->append(QString("文件创建时间：%1").arg(info.birthTime().toString("yyyy-MM-dd hh:mm:ss")));
             //关闭文件
             file.close();
         }

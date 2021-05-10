@@ -1,0 +1,106 @@
+﻿<!--
+    THIS EXAMPLE WAS DOWNLOADED FROM https://echarts.apache.org/examples/zh/editor.html?c=pie-simple
+-->
+<!DOCTYPE html>
+<html style="height: 100%">
+    <head>
+        <meta charset="utf-8">
+    </head>
+    <body style="height: 100%; margin: 0">
+        <div id="container" style="width: 500px; height: 500px;"></div>
+
+        <script type="text/javascript" src="echarts.js"></script>
+        <!-- Uncomment this line if you want to dataTool extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/dataTool.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use gl extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-gl@2/dist/echarts-gl.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to echarts-stat extension
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts-stat@latest/dist/ecStat.min.js"></script>
+        -->
+        <!-- Uncomment this line if you want to use map
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/china.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/map/js/world.js"></script>
+        -->
+        <!-- Uncomment these two lines if you want to use bmap extension
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=<Your Key Here>"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/echarts@5/dist/extension/bmap.min.js"></script>
+        -->
+
+        <script type="text/javascript">
+            var dom = document.getElementById("container");
+            var myChart = echarts.init(dom);
+
+            function setSize(size) {
+                var dom = document.getElementById("container");
+                dom.style.width = size["width"] + "px";
+                dom.style.height = size["height"] + "px";
+                myChart.resize();
+            }
+
+            function sum(arr) {
+              var len = arr.length;
+              if(len == 0){
+                return 0;
+              } else if (len == 1){
+                return arr[0];
+              } else {
+                return arr[0] + sum(arr.slice(1));
+              }
+            }
+
+            function init (str) {
+                var option = {
+                    title: {
+                        text: '饼状图',
+                        subtext: '纯属虚构',
+                        left: 'center'
+                    },
+                    tooltip: {
+                        trigger: 'item'
+                    },
+                    legend: {
+                        orient: 'vertical',
+                        left: 'left',
+                    },
+                    series: [
+                        {
+                            name: '访问来源',
+                            type: 'pie',
+                            radius: '50%',
+                            data: [
+                                {value: sum(str["data1"]), name: '邮件营销'},
+                                {value: sum(str["data2"]), name: '联盟广告'},
+                                {value: sum(str["data3"]), name: '视频广告'},
+                                {value: sum(str["data4"]), name: '直接访问'},
+                                {value: sum(str["data5"]), name: '搜索引擎'}
+                            ],
+                            emphasis: {
+                                itemStyle: {
+                                    shadowBlur: 10,
+                                    shadowOffsetX: 0,
+                                    shadowColor: 'rgba(0, 0, 0, 0.5)'
+                                }
+                            }
+                        }
+                    ]
+                };
+
+                if (option && typeof option === 'object') {
+                    myChart.setOption(option);
+                }
+            }
+
+            var initDatas = {
+                "data1": [0, 0, 0, 0, 0, 0, 0],
+                "data2": [0, 0, 0, 0, 0, 0, 0],
+                "data3": [0, 0, 0, 0, 0, 0, 0],
+                "data4": [0, 0, 0, 0, 0, 0, 0],
+                "data5": [0, 0, 0, 0, 0, 0, 0],
+            }
+            init(initDatas);
+        </script>
+    </body>
+</html>
+    

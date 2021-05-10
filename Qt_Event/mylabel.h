@@ -15,7 +15,6 @@ protected:
     void mousePressEvent(QMouseEvent *ev);
     void mouseReleaseEvent(QMouseEvent *ev);
 
-
 signals:
 
 public slots:

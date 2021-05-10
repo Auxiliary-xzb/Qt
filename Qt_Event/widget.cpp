@@ -25,14 +25,14 @@ Widget::Widget(QWidget *parent) :
      * 那么说在点击数为单数时就会停止定时器，偶数时就开始计时器
     */
     count = 0;
-    id = this->startTimer(0);
+    timer_id = this->startTimer(0);
     click_times = 1;
     connect(ui->pushButton, &QPushButton::clicked,
             [ & ](){
         if(click_times % 2 == 0)
-            id = this->startTimer(0);
+            timer_id = this->startTimer(0);
         else if(click_times % 2 == 1)
-            this->killTimer(id);
+            this->killTimer(timer_id);
 
         click_times++;
     });
@@ -54,20 +54,33 @@ Widget::Widget(QWidget *parent) :
      *
      *      所以说在程序实现了新的timerEvent时，需要定时器完成的事情，
      * 那么就不能只将timeout()信号进行链接处理。
+     *
+     * 2021年5月7日01:27:48
+     * 和上面的操作方式相同，每个定时器处理每个定时器的内容即可。
+     * 如果要类以成员变量的方式保存多个定时器ID，那么就在timeOut
+     * 事件中进行timer的id区分即可。即event->timerID();
     */
 
-    timer = new QTimer;
-    timer->setInterval(0);
-    timer->start();
+    QTimer *timer = new QTimer;
+    timer->start(0);
+    count_2 = 0;
+    click_times_2 =  1;
+
     connect(ui->pushButton_2, &QPushButton::clicked,
-            [ & ](){
-        //这种判断就很好，简洁
-        if(!timer->isActive()){
-            timer->start();
-        }
-        else if(timer->isActive()){
-            timer->stop();
-        }
+            [ = ](){
+                if(click_times_2 % 2 == 0)
+                    timer->start(0);
+                else if(click_times_2 % 2 == 1)
+                    timer->stop();
+
+                click_times_2++;
+            });
+
+    connect(timer, &QTimer::timeout, this,
+            [&](){
+                count_2++;
+                //ui->label_4->setText(tr("count_2 is %1").arg(count_2));
+                ui->label_5->setText(QString("count_2  is  %1").arg(count_2));
     });
 }
 
@@ -97,13 +110,9 @@ void Widget::keyPressEvent(QKeyEvent *event){
 }
 
 void Widget::timerEvent(QTimerEvent *event){
-    count++;
-    ui->label_4->setText(tr("count is %1").arg(count));
-
-    if(timer->isActive() == true){
-        ui->label_5->setText(tr("count is %1").arg(count_2));
-        count_2++;
-    }
+        count++;
+        //ui->label_4->setText(tr("count is %1").arg(count));
+        ui->label_4->setText(QString("count  is  %1").arg(count));
 }
 
 Widget::~Widget()

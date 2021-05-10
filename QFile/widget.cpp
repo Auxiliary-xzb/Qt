@@ -27,7 +27,7 @@ void Widget::on_pushButton_ReadFile_clicked()
      *  4.指定打开格式    （在Qt中使用不到的参数可以不写）
     */
     //读取文件的路径
-    QString path = QFileDialog::getOpenFileName(this, tr("Open File"), "../");
+    QString path = QFileDialog::getOpenFileName(this, QString("Open File"), "../");
 
     /*
      * Returns true if the string has no characters; otherwise returns false.

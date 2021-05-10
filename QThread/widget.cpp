@@ -19,7 +19,7 @@ Widget::Widget(QWidget *parent) :
     //第一种方式创建和处理线程
     //线程在处理完信息后会发出threadDone()信号
     connect(mythread_1, &MyThread_1::threadDone, this, &Widget::deal_Thread_1);
-    //帮助文档中指明了该句，所以协商。
+    //帮助文档中指明了该句，所以写上。
     connect(mythread_1, &MyThread_1::finished, mythread_1, &MyThread_1::deleteLater);
 
 
@@ -73,7 +73,7 @@ void Widget::deal_Destroy(){
      * QThread: Destroyed while thread is still running
     */
 
-    //办完手头的事在停止。terminate()函数在帮助文档中表示，使用是十分危险的。
+    //办完手头的事在停止。terminate()函数在帮助文档 中表示，使用是十分危险的。
     mythread_1->quit();
     mythread_1->threadStop();
     mythread_1->wait();
